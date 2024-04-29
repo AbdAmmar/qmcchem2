@@ -1,4 +1,4 @@
-![QMC=Chem logo](https://github.com/trex-coe/qmcchem2/raw/master/doc/QmcChemLogo.png)
+![QMC=Chem logo](https://github.com/trex-coe/qmcchem2/raw/master/docs/source/_static/QmcChemLogo.png)
 
 This repository contains version 2 of QMC=Chem.
 Version 1 is available on [GitLab](https://gitlab.com/scemama/qmcchem).
@@ -6,6 +6,7 @@ QMC=Chem is a quantum Monte Carlo program meant to be used after
 preparing a trial wave function with the
 [Quantum Package](https://github.com/quantumpackage/qp2) code.
 
+The documentation is available on [ReadTheDocs](https://qmcchem2.readthedocs.io/en/latest/index.html).
 
 Requirements
 ------------
@@ -55,6 +56,25 @@ $ source qmcchemrc
 
 The `QMCCHEM_NIC` environment variable should be set to the proper network interface,
 usually `ib0` on HPC machines.
+
+Tuning for the HPC system
+-------------------------
+
+The Intel compiler is preferred for better performance.
+With gfortan >= 12, the option `-fallow-argument-mismatch` should be added.
+
+Here are a few examples:
+```
+# Ifort
+./configure FC=ifort FCFLAGS="-O2 -g -ip -ftz -finline -xCORE-AVX2 -mkl=sequential"
+
+# GCC >= 12
+./configure FCFLAGS="-fallow-argument-mismatch -g -O2  -ffast-math  -march=native   -fno-trapping-math -fno-math-errno -ftree-vectorize -fno-stack-protector -fopenmp"
+```
+
+
+File preparation
+----------------
 
 To create files suitable for QMC=Chem, the `save_for_qmcchem` plugin
 needs to be installed in Quandtum Package. This can be done as
